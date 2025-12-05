@@ -14,8 +14,11 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
+  /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
   String: { input: string; output: string; }
+  /** The `Boolean` scalar type represents `true` or `false`. */
   Boolean: { input: boolean; output: boolean; }
+  /** The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. */
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
 };

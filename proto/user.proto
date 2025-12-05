@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/KTQAplication/backend/user-service/pkg/pb";
+
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (UserResponse);
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc GetAllUsers(GetAllUsersRequest) returns (ListUsersResponse);
+}
+
+message User {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string role = 5;
+  bool verified = 6;
+  string googleID = 7;
+  string discordID = 8;
+  string created_at = 9;
+  string avatar_url = 10;
+}
+
+message CreateUserRequest{
+    string username = 1;
+    string email = 2;
+    string password = 3;
+    string role = 4;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string avatar_url = 4;
+  string password = 5;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message GetAllUsersRequest {}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+}
+
+message UserResponse {
+  User user = 1;
+  string message = 2;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+  string message = 2;
+}

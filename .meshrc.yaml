@@ -1,4 +1,13 @@
 sources:
+  - name: UserAuth
+    handler:
+      grpc:
+        endpoint: "192.168.1.130:50051"
+        protoFile: "./proto/user.proto"
+        packageName: "user"
+        ServiceName: "UserService"
+        useHTTPS: false
+
   - name: TeamMock
     handler:
       graphql:
@@ -9,12 +18,6 @@ sources:
     handler:
       graphql:
         source: "./schemas/game.mock.graphql"
-    transforms: []
-
-  - name: UserMock
-    handler:
-      graphql:
-        source: "./schemas/user.mock.graphql"
     transforms: []
 
   - name: TournamentMock
