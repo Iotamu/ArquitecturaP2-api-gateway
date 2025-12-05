@@ -1,0 +1,35 @@
+schema {
+  query: Query
+}
+
+type Query {
+  getTeam(id: ID!): Team
+  listTeams: [Team!]!
+  getGame(id: ID!): Game
+  listGame: [Game!]!
+  getUser(id: ID!): User
+  listUser: [User!]!
+  getTournament(id: ID!): Tournament
+  listTournament: [Tournament!]!
+}
+
+type Team {
+  id: ID!
+  name: String!
+  members: Int!
+}
+
+type Game {
+  id: ID!
+  name: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Tournament {
+  id: ID!
+  name: String!
+}

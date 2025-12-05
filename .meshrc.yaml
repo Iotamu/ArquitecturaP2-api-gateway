@@ -1,0 +1,28 @@
+sources:
+  - name: TeamMock
+    handler:
+      graphql:
+        source: "./schemas/team.mock.graphql"
+    transforms: []
+
+  - name: GameMock
+    handler:
+      graphql:
+        source: "./schemas/game.mock.graphql"
+    transforms: []
+
+  - name: UserMock
+    handler:
+      graphql:
+        source: "./schemas/user.mock.graphql"
+    transforms: []
+
+  - name: TournamentMock
+    handler:
+      graphql:
+        source: "./schemas/tournament.mock.graphql"
+    transforms: []
+
+serve:
+  port: 4000
+  mock: true
