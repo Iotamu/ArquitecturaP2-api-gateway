@@ -1,11 +1,21 @@
 sources:
-  - name: UserAuth
+
+  - name: User
     handler:
       grpc:
-        endpoint: "192.168.1.130:50051"
+        endpoint: "localhost:50051"
         protoFile: "./proto/user.proto"
         packageName: "user"
-        ServiceName: "UserService"
+        serviceName: "UserService"
+        useHTTPS: false
+
+  - name: Auth
+    handler:
+      grpc:
+        endpoint: "localhost:50051"
+        protoFile: "./proto/auth.proto"
+        packageName: "auth"
+        serviceName: "AuthService"
         useHTTPS: false
 
   - name: TeamMock
@@ -14,17 +24,17 @@ sources:
         source: "./schemas/team.mock.graphql"
     transforms: []
 
-  - name: GameMock
-    handler:
-      graphql:
-        source: "./schemas/game.mock.graphql"
-    transforms: []
-
   - name: TournamentMock
     handler:
       graphql:
         source: "./schemas/tournament.mock.graphql"
     transforms: []
+  
+  - name: Game
+    handler:
+      grpc:
+        endpoint: localhost:50054
+        protoFilePath: ./proto/game.proto
 
 serve:
   port: 4000

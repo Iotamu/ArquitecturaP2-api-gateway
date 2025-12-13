@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "github.com/elfaldiajr/KTQApplication/backend/ms-game;ms-game";
+
+service GameService {
+  rpc CreateGame(CreateGameRequest) returns (GameResponse);
+  rpc GetGame(GetGameRequest) returns (GameResponse);
+}
+
+message CreateGameRequest {
+  string name = 1;
+  string genre = 2;
+}
+
+message GetGameRequest {
+  string id = 1;
+}
+
+message GameResponse {
+  string id = 1;
+  string name = 2;
+  string genre = 3;
+}

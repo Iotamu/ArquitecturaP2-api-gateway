@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package team;
+
+option go_package = "github.com/elfaldiajr/KTQApplication/backend/team-service/pkg/pb";
+
+service InvitationService {
+  rpc CreateInvitation(CreateInvitationRequest) returns (InvitationResponse);
+  rpc GetInvitation(GetInvitationRequest) returns (InvitationResponse);
+  rpc UpdateInvitationStatus(UpdateInvitationStatusRequest) returns (InvitationResponse);
+  rpc GetTeamInvitations(GetTeamInvitationsRequest) returns (ListInvitationsResponse);
+  rpc GetUserInvitations(GetUserInvitationsRequest) returns (ListInvitationsResponse);
+}
+
+message Invitation {
+  string invitation_id = 1;
+  string team_id = 2;
+  string user_invited_id = 3;
+  string user_invited_by_id = 4;
+  string status = 5;
+  string created_at = 6;
+}
+
+message CreateInvitationRequest {
+  string team_id = 1;
+  string user_invited_id = 2;
+  string user_invited_by_id = 3;
+}
+
+message GetInvitationRequest {
+  string invitation_id = 1;
+}
+
+message UpdateInvitationStatusRequest {
+  string invitation_id = 1;
+  string status = 2; // "accepted", "rejected", "cancelled"
+}
+
+message GetTeamInvitationsRequest {
+  string team_id = 1;
+}
+
+message GetUserInvitationsRequest {
+  string user_id = 1;
+}
+
+message InvitationResponse {
+  Invitation invitation = 1;
+  string message = 2;
+}
+
+message ListInvitationsResponse {
+  repeated Invitation invitations = 1;
+  int32 total = 2;
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package team;
+
+option go_package = "github.com/elfaldiajr/KTQApplication/backend/team-service/pkg/pb";
+
+service TeamMemberService {
+  rpc AddMember(AddMemberRequest) returns (TeamMemberResponse);
+  rpc GetMember(GetMemberRequest) returns (TeamMemberResponse);
+  rpc UpdateMemberRole(UpdateMemberRoleRequest) returns (TeamMemberResponse);
+  rpc RemoveMember(RemoveMemberRequest) returns (RemoveMemberResponse);
+  rpc GetTeamMembers(GetTeamMembersRequest) returns (ListTeamMembersResponse);
+}
+
+message TeamMember {
+  string team_member_id = 1;
+  string team_id = 2;
+  string user_id = 3;
+  string role = 4;
+  string joined_at = 5;
+}
+
+message AddMemberRequest {
+  string team_id = 1;
+  string user_id = 2;
+  string role = 3;
+}
+
+message GetMemberRequest {
+  string team_member_id = 1;
+}
+
+message UpdateMemberRoleRequest {
+  string team_member_id = 1;
+  string role = 2;
+}
+
+message RemoveMemberRequest {
+  string team_member_id = 1;
+}
+
+message GetTeamMembersRequest {
+  string team_id = 1;
+}
+
+message TeamMemberResponse {
+  TeamMember member = 1;
+  string message = 2;
+}
+
+message ListTeamMembersResponse {
+  repeated TeamMember members = 1;
+  int32 total = 2;
+}
+
+message RemoveMemberResponse {
+  bool success = 1;
+  string message = 2;
+}
