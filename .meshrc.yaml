@@ -3,7 +3,7 @@ sources:
   - name: User
     handler:
       grpc:
-        endpoint: localhost:50051
+        endpoint: localhost:30051
         source: "proto/user.proto"
         packageName: "user"
         serviceName: "UserService"
@@ -11,7 +11,7 @@ sources:
   - name: Auth
     handler:
       grpc:
-        endpoint: localhost:50051
+        endpoint: localhost:30051
         source: "proto/auth.proto"
         packageName: "auth"
         serviceName: "AuthService"
@@ -22,7 +22,7 @@ sources:
   - name: Invitation
     handler:
       grpc:
-        endpoint: "localhost:50052"
+        endpoint: "localhost:30052"
         source: "./proto/invitation.proto"
         packageName: "team"
         serviceName: "InvitationService"
@@ -30,7 +30,7 @@ sources:
   - name: TeamMember
     handler:
       grpc:
-        endpoint: "localhost:50052"
+        endpoint: "localhost:30052"
         source: "./proto/team_member.proto"
         packageName: "team"
         serviceName: "TeamMemberService"
@@ -38,7 +38,7 @@ sources:
   - name: Team
     handler:
       grpc:
-        endpoint: "localhost:50052"
+        endpoint: "localhost:30052"
         source: "./proto/team.proto"
         packageName: "team"
         serviceName: "TeamService"
@@ -47,7 +47,7 @@ sources:
   - name: MatchTeam
     handler:
       grpc:
-        endpoint: "localhost:50053"
+        endpoint: "localhost:30053"
         source: "./proto/match_team.proto"
         packageName: "tournament"
         serviceName: "MatchTeamService"
@@ -62,7 +62,7 @@ sources:
   - name: Match
     handler:
       grpc:
-        endpoint: "localhost:50053"
+        endpoint: "localhost:30053"
         source: "./proto/match.proto"
         packageName: "tournament"
         serviceName: "MatchService"
@@ -77,7 +77,7 @@ sources:
   - name: PlayerStats
     handler:
       grpc:
-        endpoint: "localhost:50053"
+        endpoint: "localhost:30053"
         source: "./proto/player_stats.proto"
         packageName: "tournament"
         serviceName: "PlayerStatsService"
@@ -92,7 +92,7 @@ sources:
   - name: TournamentTeam
     handler:
       grpc:
-        endpoint: "localhost:50053"
+        endpoint: "localhost:30053"
         source: "./proto/tournament_team.proto"
         packageName: "tournament"
         serviceName: "TournamentTeamService"
@@ -107,7 +107,7 @@ sources:
   - name: Tournament
     handler:
       grpc:
-        endpoint: "localhost:50053"
+        endpoint: "localhost:30053"
         source: "./proto/tournament.proto"
         packageName: "tournament"
         serviceName: "TournamentService"
@@ -123,7 +123,7 @@ sources:
   - name: Game
     handler:
       grpc:
-        endpoint: localhost:50054
+        endpoint: localhost:30054
         source: "proto/game.proto"
         packageName: "game"
         serviceName: "GameService"
