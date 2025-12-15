@@ -6,16 +6,17 @@ import { getMesh, type ExecuteMeshFn, type SubscribeMeshFn, type MeshContext as 
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import type { ImportFn } from '@graphql-mesh/types';
-import type { TeamMemberTypes } from './sources/TeamMember/types';
 import type { UserTypes } from './sources/User/types';
 import type { AuthTypes } from './sources/Auth/types';
 import type { InvitationTypes } from './sources/Invitation/types';
-import type { PlayerStatsTypes } from './sources/PlayerStats/types';
-import type { TeamTypes } from './sources/Team/types';
-import type { MatchTeamTypes } from './sources/MatchTeam/types';
-import type { MatchTypes } from './sources/Match/types';
-import type { TournamentTeamTypes } from './sources/TournamentTeam/types';
+import type { TeamMemberTypes } from './sources/TeamMember/types';
 import type { TournamentTypes } from './sources/Tournament/types';
+import type { PlayerStatsTypes } from './sources/PlayerStats/types';
+import type { TournamentTeamTypes } from './sources/TournamentTeam/types';
+import type { MatchTypes } from './sources/Match/types';
+import type { GameTypes } from './sources/Game/types';
+import type { MatchTeamTypes } from './sources/MatchTeam/types';
+import type { TeamTypes } from './sources/Team/types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -43,6 +44,7 @@ export type Scalars = {
   TransportOptions: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
+  game__GetAllGamesRequest_Input: { input: any; output: any; }
 };
 
 export type Query = {
@@ -79,6 +81,10 @@ export type Query = {
   tournament_TournamentService_GetAllTournaments?: Maybe<tournament__TournamentListResponse>;
   tournament_TournamentService_GetTournamentsByGame?: Maybe<tournament__TournamentListResponse>;
   tournament_TournamentService_connectivityState?: Maybe<ConnectivityState>;
+  game_GameService_GetGame?: Maybe<game__GameResponse>;
+  game_GameService_GetAllGames?: Maybe<game__GameListResponse>;
+  game_GameService_GetGameModesByGame?: Maybe<game__GameModeListResponse>;
+  game_GameService_connectivityState?: Maybe<ConnectivityState>;
 };
 
 
@@ -246,6 +252,26 @@ export type Querytournament_TournamentService_connectivityStateArgs = {
   tryToConnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+
+export type Querygame_GameService_GetGameArgs = {
+  input?: InputMaybe<game__GetGameRequest_Input>;
+};
+
+
+export type Querygame_GameService_GetAllGamesArgs = {
+  input?: InputMaybe<Scalars['game__GetAllGamesRequest_Input']['input']>;
+};
+
+
+export type Querygame_GameService_GetGameModesByGameArgs = {
+  input?: InputMaybe<game__GetGameModesRequest_Input>;
+};
+
+
+export type Querygame_GameService_connectivityStateArgs = {
+  tryToConnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Mutation = {
   auth_AuthService_GoogleCallback?: Maybe<auth__AuthResponse>;
   auth_AuthService_DiscordCallback?: Maybe<auth__AuthResponse>;
@@ -277,6 +303,8 @@ export type Mutation = {
   tournament_TournamentService_CreateTournament?: Maybe<tournament__TournamentResponse>;
   tournament_TournamentService_UpdateTournament?: Maybe<tournament__TournamentResponse>;
   tournament_TournamentService_DeleteTournament?: Maybe<tournament__DeleteResponse>;
+  game_GameService_CreateGame?: Maybe<game__GameResponse>;
+  game_GameService_CreateGameMode?: Maybe<game__GameModeResponse>;
 };
 
 
@@ -427,6 +455,16 @@ export type Mutationtournament_TournamentService_UpdateTournamentArgs = {
 
 export type Mutationtournament_TournamentService_DeleteTournamentArgs = {
   input?: InputMaybe<tournament__DeleteTournamentRequest_Input>;
+};
+
+
+export type Mutationgame_GameService_CreateGameArgs = {
+  input?: InputMaybe<game__CreateGameRequest_Input>;
+};
+
+
+export type Mutationgame_GameService_CreateGameModeArgs = {
+  input?: InputMaybe<game__CreateGameModeRequest_Input>;
 };
 
 export type auth__AuthURLResponse = {
@@ -1029,6 +1067,47 @@ export type tournament__DeleteTournamentRequest_Input = {
   id_tournament?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type game__GameResponse = {
+  idGame?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  gameType?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type game__GetGameRequest_Input = {
+  idGame?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type game__GameListResponse = {
+  games?: Maybe<Array<Maybe<game__GameResponse>>>;
+};
+
+export type game__GameModeListResponse = {
+  gameModes?: Maybe<Array<Maybe<game__GameModeResponse>>>;
+};
+
+export type game__GameModeResponse = {
+  idGameMode?: Maybe<Scalars['String']['output']>;
+  idGame?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  rule?: Maybe<Scalars['String']['output']>;
+};
+
+export type game__GetGameModesRequest_Input = {
+  idGame?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type game__CreateGameRequest_Input = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  gameType?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type game__CreateGameModeRequest_Input = {
+  idGame?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  rule?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -1220,6 +1299,15 @@ export type ResolversTypes = ResolversObject<{
   tournament__UpdateTournamentRequest_Input: tournament__UpdateTournamentRequest_Input;
   tournament__DeleteResponse: ResolverTypeWrapper<tournament__DeleteResponse>;
   tournament__DeleteTournamentRequest_Input: tournament__DeleteTournamentRequest_Input;
+  game__GameResponse: ResolverTypeWrapper<game__GameResponse>;
+  game__GetGameRequest_Input: game__GetGameRequest_Input;
+  game__GameListResponse: ResolverTypeWrapper<game__GameListResponse>;
+  game__GetAllGamesRequest_Input: ResolverTypeWrapper<Scalars['game__GetAllGamesRequest_Input']['output']>;
+  game__GameModeListResponse: ResolverTypeWrapper<game__GameModeListResponse>;
+  game__GameModeResponse: ResolverTypeWrapper<game__GameModeResponse>;
+  game__GetGameModesRequest_Input: game__GetGameModesRequest_Input;
+  game__CreateGameRequest_Input: game__CreateGameRequest_Input;
+  game__CreateGameModeRequest_Input: game__CreateGameModeRequest_Input;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1326,6 +1414,15 @@ export type ResolversParentTypes = ResolversObject<{
   tournament__UpdateTournamentRequest_Input: tournament__UpdateTournamentRequest_Input;
   tournament__DeleteResponse: tournament__DeleteResponse;
   tournament__DeleteTournamentRequest_Input: tournament__DeleteTournamentRequest_Input;
+  game__GameResponse: game__GameResponse;
+  game__GetGameRequest_Input: game__GetGameRequest_Input;
+  game__GameListResponse: game__GameListResponse;
+  game__GetAllGamesRequest_Input: Scalars['game__GetAllGamesRequest_Input']['output'];
+  game__GameModeListResponse: game__GameModeListResponse;
+  game__GameModeResponse: game__GameModeResponse;
+  game__GetGameModesRequest_Input: game__GetGameModesRequest_Input;
+  game__CreateGameRequest_Input: game__CreateGameRequest_Input;
+  game__CreateGameModeRequest_Input: game__CreateGameModeRequest_Input;
 }>;
 
 export type grpcMethodDirectiveArgs = {
@@ -1404,6 +1501,10 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
   tournament_TournamentService_GetAllTournaments?: Resolver<Maybe<ResolversTypes['tournament__TournamentListResponse']>, ParentType, ContextType, Partial<Querytournament_TournamentService_GetAllTournamentsArgs>>;
   tournament_TournamentService_GetTournamentsByGame?: Resolver<Maybe<ResolversTypes['tournament__TournamentListResponse']>, ParentType, ContextType, Partial<Querytournament_TournamentService_GetTournamentsByGameArgs>>;
   tournament_TournamentService_connectivityState?: Resolver<Maybe<ResolversTypes['ConnectivityState']>, ParentType, ContextType, Partial<Querytournament_TournamentService_connectivityStateArgs>>;
+  game_GameService_GetGame?: Resolver<Maybe<ResolversTypes['game__GameResponse']>, ParentType, ContextType, Partial<Querygame_GameService_GetGameArgs>>;
+  game_GameService_GetAllGames?: Resolver<Maybe<ResolversTypes['game__GameListResponse']>, ParentType, ContextType, Partial<Querygame_GameService_GetAllGamesArgs>>;
+  game_GameService_GetGameModesByGame?: Resolver<Maybe<ResolversTypes['game__GameModeListResponse']>, ParentType, ContextType, Partial<Querygame_GameService_GetGameModesByGameArgs>>;
+  game_GameService_connectivityState?: Resolver<Maybe<ResolversTypes['ConnectivityState']>, ParentType, ContextType, Partial<Querygame_GameService_connectivityStateArgs>>;
 }>;
 
 export type MutationResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
@@ -1437,6 +1538,8 @@ export type MutationResolvers<ContextType = MeshContext, ParentType extends Reso
   tournament_TournamentService_CreateTournament?: Resolver<Maybe<ResolversTypes['tournament__TournamentResponse']>, ParentType, ContextType, Partial<Mutationtournament_TournamentService_CreateTournamentArgs>>;
   tournament_TournamentService_UpdateTournament?: Resolver<Maybe<ResolversTypes['tournament__TournamentResponse']>, ParentType, ContextType, Partial<Mutationtournament_TournamentService_UpdateTournamentArgs>>;
   tournament_TournamentService_DeleteTournament?: Resolver<Maybe<ResolversTypes['tournament__DeleteResponse']>, ParentType, ContextType, Partial<Mutationtournament_TournamentService_DeleteTournamentArgs>>;
+  game_GameService_CreateGame?: Resolver<Maybe<ResolversTypes['game__GameResponse']>, ParentType, ContextType, Partial<Mutationgame_GameService_CreateGameArgs>>;
+  game_GameService_CreateGameMode?: Resolver<Maybe<ResolversTypes['game__GameModeResponse']>, ParentType, ContextType, Partial<Mutationgame_GameService_CreateGameModeArgs>>;
 }>;
 
 export type auth__AuthURLResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['auth__AuthURLResponse'] = ResolversParentTypes['auth__AuthURLResponse']> = ResolversObject<{
@@ -1744,6 +1847,32 @@ export type tournament__DeleteResponseResolvers<ContextType = MeshContext, Paren
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
+export type game__GameResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameResponse'] = ResolversParentTypes['game__GameResponse']> = ResolversObject<{
+  idGame?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  gameType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+}>;
+
+export type game__GameListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameListResponse'] = ResolversParentTypes['game__GameListResponse']> = ResolversObject<{
+  games?: Resolver<Maybe<Array<Maybe<ResolversTypes['game__GameResponse']>>>, ParentType, ContextType>;
+}>;
+
+export interface game__GetAllGamesRequest_InputScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['game__GetAllGamesRequest_Input'], any> {
+  name: 'game__GetAllGamesRequest_Input';
+}
+
+export type game__GameModeListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameModeListResponse'] = ResolversParentTypes['game__GameModeListResponse']> = ResolversObject<{
+  gameModes?: Resolver<Maybe<Array<Maybe<ResolversTypes['game__GameModeResponse']>>>, ParentType, ContextType>;
+}>;
+
+export type game__GameModeResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameModeResponse'] = ResolversParentTypes['game__GameModeResponse']> = ResolversObject<{
+  idGameMode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  idGame?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  rule?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -1792,6 +1921,11 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   tournament__Tournament?: tournament__TournamentResolvers<ContextType>;
   tournament__TournamentListResponse?: tournament__TournamentListResponseResolvers<ContextType>;
   tournament__DeleteResponse?: tournament__DeleteResponseResolvers<ContextType>;
+  game__GameResponse?: game__GameResponseResolvers<ContextType>;
+  game__GameListResponse?: game__GameListResponseResolvers<ContextType>;
+  game__GetAllGamesRequest_Input?: GraphQLScalarType;
+  game__GameModeListResponse?: game__GameModeListResponseResolvers<ContextType>;
+  game__GameModeResponse?: game__GameModeResponseResolvers<ContextType>;
 }>;
 
 export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
@@ -1802,7 +1936,7 @@ export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
   enum?: enumDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = UserTypes.Context & AuthTypes.Context & InvitationTypes.Context & TeamMemberTypes.Context & TeamTypes.Context & MatchTeamTypes.Context & MatchTypes.Context & PlayerStatsTypes.Context & TournamentTeamTypes.Context & TournamentTypes.Context & BaseMeshContext;
+export type MeshContext = UserTypes.Context & AuthTypes.Context & InvitationTypes.Context & TeamMemberTypes.Context & TeamTypes.Context & MatchTeamTypes.Context & MatchTypes.Context & PlayerStatsTypes.Context & TournamentTeamTypes.Context & TournamentTypes.Context & GameTypes.Context & BaseMeshContext;
 
 
 const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
@@ -1839,7 +1973,7 @@ export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandl
   return createMeshHTTPHandler<TServerContext>({
     baseDir,
     getBuiltMesh: getBuiltMesh,
-    rawServeConfig: {"port":4000,"mock":true},
+    rawServeConfig: {"port":4000},
   })
 }
 

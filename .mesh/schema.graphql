@@ -57,6 +57,10 @@ type Query {
   tournament_TournamentService_GetAllTournaments(input: tournament__GetAllTournamentsRequest_Input): tournament__TournamentListResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "GetAllTournaments", responseStream: false)
   tournament_TournamentService_GetTournamentsByGame(input: tournament__GetTournamentsByGameRequest_Input): tournament__TournamentListResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "GetTournamentsByGame", responseStream: false)
   tournament_TournamentService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService")
+  game_GameService_GetGame(input: game__GetGameRequest_Input): game__GameResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "GetGame", responseStream: false)
+  game_GameService_GetAllGames(input: game__GetAllGamesRequest_Input): game__GameListResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "GetAllGames", responseStream: false)
+  game_GameService_GetGameModesByGame(input: game__GetGameModesRequest_Input): game__GameModeListResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "GetGameModesByGame", responseStream: false)
+  game_GameService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService")
 }
 
 type Mutation {
@@ -90,6 +94,8 @@ type Mutation {
   tournament_TournamentService_CreateTournament(input: tournament__CreateTournamentRequest_Input): tournament__TournamentResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "CreateTournament", responseStream: false)
   tournament_TournamentService_UpdateTournament(input: tournament__UpdateTournamentRequest_Input): tournament__TournamentResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "UpdateTournament", responseStream: false)
   tournament_TournamentService_DeleteTournament(input: tournament__DeleteTournamentRequest_Input): tournament__DeleteResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "DeleteTournament", responseStream: false)
+  game_GameService_CreateGame(input: game__CreateGameRequest_Input): game__GameResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "CreateGame", responseStream: false)
+  game_GameService_CreateGameMode(input: game__CreateGameModeRequest_Input): game__GameModeResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "CreateGameMode", responseStream: false)
 }
 
 type auth__AuthURLResponse {
@@ -707,4 +713,47 @@ type tournament__DeleteResponse {
 
 input tournament__DeleteTournamentRequest_Input {
   id_tournament: String
+}
+
+type game__GameResponse {
+  idGame: String
+  name: String
+  gameType: String
+  createdAt: String
+}
+
+input game__GetGameRequest_Input {
+  idGame: String
+}
+
+type game__GameListResponse {
+  games: [game__GameResponse]
+}
+
+scalar game__GetAllGamesRequest_Input @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type game__GameModeListResponse {
+  gameModes: [game__GameModeResponse]
+}
+
+type game__GameModeResponse {
+  idGameMode: String
+  idGame: String
+  name: String
+  rule: String
+}
+
+input game__GetGameModesRequest_Input {
+  idGame: String
+}
+
+input game__CreateGameRequest_Input {
+  name: String
+  gameType: String
+}
+
+input game__CreateGameModeRequest_Input {
+  idGame: String
+  name: String
+  rule: String
 }

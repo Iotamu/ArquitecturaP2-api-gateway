@@ -2,24 +2,55 @@ syntax = "proto3";
 
 package game;
 
-option go_package = "github.com/elfaldiajr/KTQApplication/backend/ms-game;ms-game";
-
 service GameService {
   rpc CreateGame(CreateGameRequest) returns (GameResponse);
-  rpc GetGame(GetGameRequest) returns (GameResponse);
+  rpc GetGame (GetGameRequest) returns (GameResponse);
+  rpc GetAllGames (GetAllGamesRequest) returns (GameListResponse);
+  rpc CreateGameMode (CreateGameModeRequest) returns (GameModeResponse);
+  rpc GetGameModesByGame (GetGameModesRequest) returns (GameModeListResponse);
 }
 
 message CreateGameRequest {
   string name = 1;
-  string genre = 2;
+  string game_type = 2;
 }
 
 message GetGameRequest {
-  string id = 1;
+  string id_game = 1;
+}
+
+message GetAllGamesRequest {
+
+}
+
+message CreateGameModeRequest {
+  string id_game = 1;
+  string name = 2;
+  string rule = 3; //JSON como string Atencion
+}
+
+message GetGameModesRequest {
+  string id_game = 1;
 }
 
 message GameResponse {
-  string id = 1;
+  string id_game = 1;
   string name = 2;
-  string genre = 3;
+  string game_type = 3;
+  string created_at = 4;
+}
+
+message GameListResponse {
+  repeated GameResponse games = 1;
+}
+
+message GameModeResponse {
+  string id_game_mode = 1;
+  string id_game = 2;
+  string name = 3;
+  string rule = 4;
+}
+
+message GameModeListResponse {
+  repeated GameModeResponse game_modes = 1;
 }

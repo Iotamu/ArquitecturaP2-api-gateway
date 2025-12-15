@@ -52,6 +52,13 @@ sources:
         packageName: "tournament"
         serviceName: "MatchTeamService"
         useHTTPS: false
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase
   - name: Match
     handler:
       grpc:
@@ -59,7 +66,14 @@ sources:
         source: "./proto/match.proto"
         packageName: "tournament"
         serviceName: "MatchService"
-        useHTTPS: false        
+        useHTTPS: false  
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase      
   - name: PlayerStats
     handler:
       grpc:
@@ -68,6 +82,13 @@ sources:
         packageName: "tournament"
         serviceName: "PlayerStatsService"
         useHTTPS: false
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase
   - name: TournamentTeam
     handler:
       grpc:
@@ -76,6 +97,13 @@ sources:
         packageName: "tournament"
         serviceName: "TournamentTeamService"
         useHTTPS: false
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase
   - name: Tournament
     handler:
       grpc:
@@ -84,7 +112,30 @@ sources:
         packageName: "tournament"
         serviceName: "TournamentService"
         useHTTPS: false
-                   
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase
+
+  - name: Game
+    handler:
+      grpc:
+        endpoint: "localhost:50054"
+        protoFilePath: "./proto/game.proto"
+        packageName: "game"
+        serviceName: "GameService"
+        useHTTPS: false
+
+    transforms:
+      - namingConvention:
+          mode: wrap
+          namingConvention:
+            typeNames: pascalCase
+            fieldNames: snakeCase
+            enumValues: upperCase  
+
 serve:
   port: 4000
-  mock: true
