@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package tournament;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+service PlayerStatsService {
+  rpc CreatePlayerStat(CreatePlayerStatRequest) returns (PlayerStatResponse);
+  rpc GetPlayerStat(GetPlayerStatRequest) returns (PlayerStatResponse);
+  rpc UpdatePlayerStat(UpdatePlayerStatRequest) returns (PlayerStatResponse);
+  rpc GetAllPlayerStats(GetAllPlayerStatsRequest) returns (PlayerStatListResponse);
+  rpc DeletePlayerStat(DeletePlayerStatRequest) returns (DeletePlayerStatResponse);
+}
+
+message PlayerStat {
+  string id_player_stat = 1;
+  string id_match = 2;
+  string id_match_team = 3;
+  string id_team = 4;
+  string id_user = 5; 
+  int32 kills = 6;
+  int32 deaths = 7;
+  int32 assists = 8;
+  int32 score = 9;
+  google.protobuf.Struct stats = 10; 
+  google.protobuf.Timestamp created_at = 11;
+}
+
+message CreatePlayerStatRequest {
+  string id_match = 1;
+  string id_match_team = 2;
+  string id_team = 3;
+  string id_user = 4;
+  int32 kills = 5;
+  int32 deaths = 6;
+  int32 assists = 7;
+  int32 score = 8;
+  google.protobuf.Struct stats = 9;
+}
+
+message GetPlayerStatRequest {
+  string id_player_stat = 1;
+}
+
+message UpdatePlayerStatRequest {
+  string id_player_stat = 1;
+  int32 kills = 2;
+  int32 deaths = 3;
+  int32 assists = 4;
+  int32 score = 5;
+  google.protobuf.Struct stats = 6;
+}
+
+message GetAllPlayerStatsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string id_match = 3; // filtro opcional
+  string id_user = 4; // filtro opcional
+}
+
+message DeletePlayerStatRequest {
+  string id_player_stat = 1;
+}
+
+message PlayerStatResponse {
+  PlayerStat player_stat = 1;
+  string message = 2;
+}
+
+message PlayerStatListResponse {
+  repeated PlayerStat player_stats = 1;
+  int32 total = 2;
+}
+
+message DeletePlayerStatResponse {
+  bool success = 1;
+  string message = 2;
+}

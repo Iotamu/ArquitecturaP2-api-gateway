@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package tournament;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+service MatchTeamService {
+  rpc CreateMatchTeam(CreateMatchTeamRequest) returns (MatchTeamResponse);
+  rpc GetMatchTeam(GetMatchTeamRequest) returns (MatchTeamResponse);
+  rpc UpdateMatchTeam(UpdateMatchTeamRequest) returns (MatchTeamResponse);
+  rpc GetAllMatchTeams(GetAllMatchTeamsRequest) returns (MatchTeamListResponse);
+  rpc DeleteMatchTeam(DeleteMatchTeamRequest) returns (DeleteMatchTeamResponse);
+}
+
+message MatchTeam {
+  string id_match_team = 1;
+  string id_tournament_team = 2;
+  string id_match = 3;
+  string team_side = 4; 
+  int32 final_score = 5;
+  int32 placement = 6;
+  double points_earned = 7; 
+  string results = 8;
+  google.protobuf.Struct stats = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message CreateMatchTeamRequest {
+  string id_tournament_team = 1;
+  string id_match = 2;
+  string team_side = 3;
+  int32 final_score = 4;
+  int32 placement = 5;
+  double points_earned = 6;
+  string results = 7;
+  google.protobuf.Struct stats = 8;
+}
+
+message GetMatchTeamRequest {
+  string id_match_team = 1;
+}
+
+message UpdateMatchTeamRequest {
+  string id_match_team = 1;
+  string team_side = 2;
+  int32 final_score = 3;
+  int32 placement = 4;
+  double points_earned = 5;
+  string results = 6;
+  google.protobuf.Struct stats = 7;
+}
+
+message GetAllMatchTeamsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string id_match = 3; // filtro opcional
+  string id_tournament_team = 4; // filtro opcional
+}
+
+message DeleteMatchTeamRequest {
+  string id_match_team = 1;
+}
+
+message MatchTeamResponse {
+  MatchTeam match_team = 1;
+  string message = 2;
+}
+
+message MatchTeamListResponse {
+  repeated MatchTeam match_teams = 1;
+  int32 total = 2;
+}
+
+message DeleteMatchTeamResponse {
+  bool success = 1;
+  string message = 2;
+}

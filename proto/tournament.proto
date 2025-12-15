@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package tournament;
+
+service TournamentService {
+  rpc CreateTournament(CreateTournamentRequest) returns (TournamentResponse);
+  rpc GetTournament(GetTournamentRequest) returns (TournamentResponse);
+  rpc UpdateTournament(UpdateTournamentRequest) returns (TournamentResponse);
+  rpc DeleteTournament(DeleteTournamentRequest) returns (DeleteResponse);
+  rpc GetAllTournaments(GetAllTournamentsRequest) returns (TournamentListResponse);
+  rpc GetTournamentsByGame(GetTournamentsByGameRequest) returns (TournamentListResponse);
+}
+
+message Tournament {
+  string id_tournament = 1;
+  string id_game = 2;
+  string id_created_by = 3;
+  string name = 4;
+  string description = 5;
+  string banner_url = 6;
+  string status = 7;
+  string format = 8;
+  string started_date = 9;
+  string end_date = 10;
+  string registration_deadline = 11;
+  int32 max_teams = 12;
+  int32 min_teams = 13;
+  int32 team_size = 14;
+  string rules = 15;
+  string scoring_schema = 16;
+  string prize_pool = 17;
+  string created_at = 18;
+  string updated_at = 19;
+}
+
+message CreateTournamentRequest {
+  string id_game = 1;
+  string id_created_by = 2;
+  string name = 3;
+  string description = 4;
+  string banner_url = 5;
+  string format = 6;
+  string started_date = 7;
+  string end_date = 8;
+  string registration_deadline = 9;
+  int32 max_teams = 10;
+  int32 min_teams = 11;
+  int32 team_size = 12;
+  string rules = 13;
+  string scoring_schema = 14;
+  string prize_pool = 15;
+}
+
+message GetTournamentRequest {
+  string id_tournament = 1;
+}
+
+message UpdateTournamentRequest {
+  string id_tournament = 1;
+  string name = 2;
+  string description = 3;
+  string banner_url = 4;
+  string status = 5;
+}
+
+message DeleteTournamentRequest {
+  string id_tournament = 1;
+}
+
+message GetAllTournamentsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message GetTournamentsByGameRequest {
+  string id_game = 1;
+}
+
+message TournamentResponse {
+  Tournament tournament = 1;
+  string message = 2;
+}
+
+message TournamentListResponse {
+  repeated Tournament tournaments = 1;
+  int32 total = 2;
+}
+
+message DeleteResponse {
+  bool success = 1;
+  string message = 2;
+}

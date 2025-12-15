@@ -8,7 +8,6 @@ sources:
         packageName: "user"
         serviceName: "UserService"
         useHTTPS: false
-
   - name: Auth
     handler:
       grpc:
@@ -18,24 +17,74 @@ sources:
         serviceName: "AuthService"
         useHTTPS: false
 
-  - name: TeamMock
-    handler:
-      graphql:
-        source: "./schemas/team.mock.graphql"
-    transforms: []
 
-  - name: TournamentMock
-    handler:
-      graphql:
-        source: "./schemas/tournament.mock.graphql"
-    transforms: []
-  
-  - name: Game
+
+  - name: Invitation
     handler:
       grpc:
-        endpoint: localhost:50054
-        protoFilePath: ./proto/game.proto
+        endpoint: "localhost:50052"
+        source: "./proto/invitation.proto"
+        packageName: "team"
+        serviceName: "InvitationService"
+        useHTTPS: false
+  - name: TeamMember
+    handler:
+      grpc:
+        endpoint: "localhost:50052"
+        source: "./proto/team_member.proto"
+        packageName: "team"
+        serviceName: "TeamMemberService"
+        useHTTPS: false
+  - name: Team
+    handler:
+      grpc:
+        endpoint: "localhost:50052"
+        source: "./proto/team.proto"
+        packageName: "team"
+        serviceName: "TeamService"
+        useHTTPS: false
 
+  - name: MatchTeam
+    handler:
+      grpc:
+        endpoint: "localhost:50053"
+        source: "./proto/match_team.proto"
+        packageName: "tournament"
+        serviceName: "MatchTeamService"
+        useHTTPS: false
+  - name: Match
+    handler:
+      grpc:
+        endpoint: "localhost:50053"
+        source: "./proto/match.proto"
+        packageName: "tournament"
+        serviceName: "MatchService"
+        useHTTPS: false        
+  - name: PlayerStats
+    handler:
+      grpc:
+        endpoint: "localhost:50053"
+        source: "./proto/player_stats.proto"
+        packageName: "tournament"
+        serviceName: "PlayerStatsService"
+        useHTTPS: false
+  - name: TournamentTeam
+    handler:
+      grpc:
+        endpoint: "localhost:50053"
+        source: "./proto/tournament_team.proto"
+        packageName: "tournament"
+        serviceName: "TournamentTeamService"
+        useHTTPS: false
+  - name: Tournament
+    handler:
+      grpc:
+        endpoint: "localhost:50053"
+        source: "./proto/tournament.proto"
+        packageName: "tournament"
+        serviceName: "TournamentService"
+        useHTTPS: false
+                   
 serve:
   port: 4000
   mock: true

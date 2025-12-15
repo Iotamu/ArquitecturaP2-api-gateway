@@ -21,6 +21,8 @@ directive @stream(
 
 directive @transport(subgraph: String, kind: String, location: String, options: TransportOptions) repeatable on SCHEMA
 
+directive @enum(subgraph: String, value: String) on ENUM_VALUE
+
 type Query {
   auth_AuthService_GetGoogleAuthURL(input: auth__GetAuthURLRequest_Input): auth__AuthURLResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root0", objPath: "auth.AuthService", methodName: "GetGoogleAuthURL", responseStream: false)
   auth_AuthService_GetDiscordAuthURL(input: auth__GetAuthURLRequest_Input): auth__AuthURLResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root0", objPath: "auth.AuthService", methodName: "GetDiscordAuthURL", responseStream: false)
@@ -28,12 +30,33 @@ type Query {
   user_UserService_GetUser(input: user__GetUserRequest_Input): user__UserResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "GetUser", responseStream: false)
   user_UserService_GetAllUsers(input: user__GetAllUsersRequest_Input): user__ListUsersResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "GetAllUsers", responseStream: false)
   user_UserService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService")
-  getTeam(id: ID!): Team
-  listTeams: [Team!]!
-  getTournament(id: ID!): Tournament
-  listTournament: [Tournament!]!
-  game_GameService_GetGame(input: game__GetGameRequest_Input): game__GameResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "GetGame", responseStream: false)
-  game_GameService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService")
+  team_InvitationService_GetInvitation(input: team__GetInvitationRequest_Input): team__InvitationResponse @grpcMethod(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService", methodName: "GetInvitation", responseStream: false)
+  team_InvitationService_GetTeamInvitations(input: team__GetTeamInvitationsRequest_Input): team__ListInvitationsResponse @grpcMethod(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService", methodName: "GetTeamInvitations", responseStream: false)
+  team_InvitationService_GetUserInvitations(input: team__GetUserInvitationsRequest_Input): team__ListInvitationsResponse @grpcMethod(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService", methodName: "GetUserInvitations", responseStream: false)
+  team_InvitationService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService")
+  team_TeamMemberService_GetMember(input: team__GetMemberRequest_Input): team__TeamMemberResponse @grpcMethod(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService", methodName: "GetMember", responseStream: false)
+  team_TeamMemberService_GetTeamMembers(input: team__GetTeamMembersRequest_Input): team__ListTeamMembersResponse @grpcMethod(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService", methodName: "GetTeamMembers", responseStream: false)
+  team_TeamMemberService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService")
+  team_TeamService_GetTeam(input: team__GetTeamRequest_Input): team__TeamResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "GetTeam", responseStream: false)
+  team_TeamService_GetAllTeams(input: team__GetAllTeamsRequest_Input): team__ListTeamsResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "GetAllTeams", responseStream: false)
+  team_TeamService_GetTeamsByOwner(input: team__GetTeamsByOwnerRequest_Input): team__ListTeamsResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "GetTeamsByOwner", responseStream: false)
+  team_TeamService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService")
+  tournament_MatchTeamService_GetMatchTeam(input: tournament__GetMatchTeamRequest_Input): tournament__MatchTeamResponse @grpcMethod(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService", methodName: "GetMatchTeam", responseStream: false)
+  tournament_MatchTeamService_GetAllMatchTeams(input: tournament__GetAllMatchTeamsRequest_Input): tournament__MatchTeamListResponse @grpcMethod(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService", methodName: "GetAllMatchTeams", responseStream: false)
+  tournament_MatchTeamService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService")
+  tournament_MatchService_GetMatch(input: tournament__GetMatchRequest_Input): tournament__MatchResponse @grpcMethod(subgraph: "Match", rootJsonName: "Root0", objPath: "tournament.MatchService", methodName: "GetMatch", responseStream: false)
+  tournament_MatchService_GetMatchesByTournament(input: tournament__GetMatchesByTournamentRequest_Input): tournament__MatchListResponse @grpcMethod(subgraph: "Match", rootJsonName: "Root0", objPath: "tournament.MatchService", methodName: "GetMatchesByTournament", responseStream: false)
+  tournament_MatchService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Match", rootJsonName: "Root0", objPath: "tournament.MatchService")
+  tournament_PlayerStatsService_GetPlayerStat(input: tournament__GetPlayerStatRequest_Input): tournament__PlayerStatResponse @grpcMethod(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService", methodName: "GetPlayerStat", responseStream: false)
+  tournament_PlayerStatsService_GetAllPlayerStats(input: tournament__GetAllPlayerStatsRequest_Input): tournament__PlayerStatListResponse @grpcMethod(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService", methodName: "GetAllPlayerStats", responseStream: false)
+  tournament_PlayerStatsService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService")
+  tournament_TournamentTeamService_GetTournamentTeam(input: tournament__GetTournamentTeamRequest_Input): tournament__TournamentTeamResponse @grpcMethod(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService", methodName: "GetTournamentTeam", responseStream: false)
+  tournament_TournamentTeamService_GetAllTournamentTeam(input: tournament__GetAllTournamentTeamRequest_Input): tournament__TournamentTeamListResponse @grpcMethod(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService", methodName: "GetAllTournamentTeam", responseStream: false)
+  tournament_TournamentTeamService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService")
+  tournament_TournamentService_GetTournament(input: tournament__GetTournamentRequest_Input): tournament__TournamentResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "GetTournament", responseStream: false)
+  tournament_TournamentService_GetAllTournaments(input: tournament__GetAllTournamentsRequest_Input): tournament__TournamentListResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "GetAllTournaments", responseStream: false)
+  tournament_TournamentService_GetTournamentsByGame(input: tournament__GetTournamentsByGameRequest_Input): tournament__TournamentListResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "GetTournamentsByGame", responseStream: false)
+  tournament_TournamentService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService")
 }
 
 type Mutation {
@@ -44,7 +67,29 @@ type Mutation {
   user_UserService_CreateUser(input: user__CreateUserRequest_Input): user__UserResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "CreateUser", responseStream: false)
   user_UserService_UpdateUser(input: user__UpdateUserRequest_Input): user__UserResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "UpdateUser", responseStream: false)
   user_UserService_DeleteUser(input: user__DeleteUserRequest_Input): user__DeleteUserResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "DeleteUser", responseStream: false)
-  game_GameService_CreateGame(input: game__CreateGameRequest_Input): game__GameResponse @grpcMethod(subgraph: "Game", rootJsonName: "Root0", objPath: "game.GameService", methodName: "CreateGame", responseStream: false)
+  user_UserService_CheckEmailStatus(input: user__CheckEmailRequest_Input): user__CheckEmailResponse @grpcMethod(subgraph: "Auth", rootJsonName: "Root1", objPath: "user.UserService", methodName: "CheckEmailStatus", responseStream: false)
+  team_InvitationService_CreateInvitation(input: team__CreateInvitationRequest_Input): team__InvitationResponse @grpcMethod(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService", methodName: "CreateInvitation", responseStream: false)
+  team_InvitationService_UpdateInvitationStatus(input: team__UpdateInvitationStatusRequest_Input): team__InvitationResponse @grpcMethod(subgraph: "Invitation", rootJsonName: "Root0", objPath: "team.InvitationService", methodName: "UpdateInvitationStatus", responseStream: false)
+  team_TeamMemberService_AddMember(input: team__AddMemberRequest_Input): team__TeamMemberResponse @grpcMethod(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService", methodName: "AddMember", responseStream: false)
+  team_TeamMemberService_UpdateMemberRole(input: team__UpdateMemberRoleRequest_Input): team__TeamMemberResponse @grpcMethod(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService", methodName: "UpdateMemberRole", responseStream: false)
+  team_TeamMemberService_RemoveMember(input: team__RemoveMemberRequest_Input): team__RemoveMemberResponse @grpcMethod(subgraph: "TeamMember", rootJsonName: "Root0", objPath: "team.TeamMemberService", methodName: "RemoveMember", responseStream: false)
+  team_TeamService_CreateTeam(input: team__CreateTeamRequest_Input): team__TeamResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "CreateTeam", responseStream: false)
+  team_TeamService_UpdateTeam(input: team__UpdateTeamRequest_Input): team__TeamResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "UpdateTeam", responseStream: false)
+  team_TeamService_DeleteTeam(input: team__DeleteTeamRequest_Input): team__DeleteTeamResponse @grpcMethod(subgraph: "Team", rootJsonName: "Root0", objPath: "team.TeamService", methodName: "DeleteTeam", responseStream: false)
+  tournament_MatchTeamService_CreateMatchTeam(input: tournament__CreateMatchTeamRequest_Input): tournament__MatchTeamResponse @grpcMethod(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService", methodName: "CreateMatchTeam", responseStream: false)
+  tournament_MatchTeamService_UpdateMatchTeam(input: tournament__UpdateMatchTeamRequest_Input): tournament__MatchTeamResponse @grpcMethod(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService", methodName: "UpdateMatchTeam", responseStream: false)
+  tournament_MatchTeamService_DeleteMatchTeam(input: tournament__DeleteMatchTeamRequest_Input): tournament__DeleteMatchTeamResponse @grpcMethod(subgraph: "MatchTeam", rootJsonName: "Root0", objPath: "tournament.MatchTeamService", methodName: "DeleteMatchTeam", responseStream: false)
+  tournament_MatchService_CreateMatch(input: tournament__CreateMatchRequest_Input): tournament__MatchResponse @grpcMethod(subgraph: "Match", rootJsonName: "Root0", objPath: "tournament.MatchService", methodName: "CreateMatch", responseStream: false)
+  tournament_MatchService_UpdateMatch(input: tournament__UpdateMatchRequest_Input): tournament__MatchResponse @grpcMethod(subgraph: "Match", rootJsonName: "Root0", objPath: "tournament.MatchService", methodName: "UpdateMatch", responseStream: false)
+  tournament_PlayerStatsService_CreatePlayerStat(input: tournament__CreatePlayerStatRequest_Input): tournament__PlayerStatResponse @grpcMethod(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService", methodName: "CreatePlayerStat", responseStream: false)
+  tournament_PlayerStatsService_UpdatePlayerStat(input: tournament__UpdatePlayerStatRequest_Input): tournament__PlayerStatResponse @grpcMethod(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService", methodName: "UpdatePlayerStat", responseStream: false)
+  tournament_PlayerStatsService_DeletePlayerStat(input: tournament__DeletePlayerStatRequest_Input): tournament__DeletePlayerStatResponse @grpcMethod(subgraph: "PlayerStats", rootJsonName: "Root0", objPath: "tournament.PlayerStatsService", methodName: "DeletePlayerStat", responseStream: false)
+  tournament_TournamentTeamService_CreateTournamentTeam(input: tournament__CreateTournamentTeamRequest_Input): tournament__TournamentTeamResponse @grpcMethod(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService", methodName: "CreateTournamentTeam", responseStream: false)
+  tournament_TournamentTeamService_UpdateTournamentTeam(input: tournament__UpdateTournamentTeamRequest_Input): tournament__TournamentTeamResponse @grpcMethod(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService", methodName: "UpdateTournamentTeam", responseStream: false)
+  tournament_TournamentTeamService_DeleteTournamentTeam(input: tournament__DeleteTournamentTeamRequest_Input): tournament__DeleteTournamentTeamResponse @grpcMethod(subgraph: "TournamentTeam", rootJsonName: "Root0", objPath: "tournament.TournamentTeamService", methodName: "DeleteTournamentTeam", responseStream: false)
+  tournament_TournamentService_CreateTournament(input: tournament__CreateTournamentRequest_Input): tournament__TournamentResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "CreateTournament", responseStream: false)
+  tournament_TournamentService_UpdateTournament(input: tournament__UpdateTournamentRequest_Input): tournament__TournamentResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "UpdateTournament", responseStream: false)
+  tournament_TournamentService_DeleteTournament(input: tournament__DeleteTournamentRequest_Input): tournament__DeleteResponse @grpcMethod(subgraph: "Tournament", rootJsonName: "Root0", objPath: "tournament.TournamentService", methodName: "DeleteTournament", responseStream: false)
 }
 
 type auth__AuthURLResponse {
@@ -159,30 +204,507 @@ input user__DeleteUserRequest_Input {
   id: String
 }
 
+type user__CheckEmailResponse {
+  available: Boolean
+  has_password: Boolean
+  auth_provider: String
+  message: String
+  can_complete: Boolean
+}
+
+input user__CheckEmailRequest_Input {
+  email: String
+}
+
 scalar TransportOptions
 
-type Team {
-  id: ID!
-  name: String!
-  members: Int!
+type team__InvitationResponse {
+  invitation: team__Invitation
+  message: String
 }
 
-type Tournament {
-  id: ID!
-  name: String!
+type team__Invitation {
+  invitation_id: String
+  team_id: String
+  user_invited_id: String
+  user_invited_by_id: String
+  status: String
+  created_at: String
 }
 
-type game__GameResponse {
-  id: String
+input team__GetInvitationRequest_Input {
+  invitation_id: String
+}
+
+type team__ListInvitationsResponse {
+  invitations: [team__Invitation]
+  total: Int
+}
+
+input team__GetTeamInvitationsRequest_Input {
+  team_id: String
+}
+
+input team__GetUserInvitationsRequest_Input {
+  user_id: String
+}
+
+input team__CreateInvitationRequest_Input {
+  team_id: String
+  user_invited_id: String
+  user_invited_by_id: String
+}
+
+input team__UpdateInvitationStatusRequest_Input {
+  invitation_id: String
+  """
+  "accepted", "rejected", "cancelled"
+  """
+  status: String
+}
+
+type team__TeamMemberResponse {
+  member: team__TeamMember
+  message: String
+}
+
+type team__TeamMember {
+  team_member_id: String
+  team_id: String
+  user_id: String
+  role: String
+  joined_at: String
+}
+
+input team__GetMemberRequest_Input {
+  team_member_id: String
+}
+
+type team__ListTeamMembersResponse {
+  members: [team__TeamMember]
+  total: Int
+}
+
+input team__GetTeamMembersRequest_Input {
+  team_id: String
+}
+
+input team__AddMemberRequest_Input {
+  team_id: String
+  user_id: String
+  role: String
+}
+
+input team__UpdateMemberRoleRequest_Input {
+  team_member_id: String
+  role: String
+}
+
+type team__RemoveMemberResponse {
+  success: Boolean
+  message: String
+}
+
+input team__RemoveMemberRequest_Input {
+  team_member_id: String
+}
+
+type team__TeamResponse {
+  team: team__Team
+  message: String
+}
+
+type team__Team {
+  team_id: String
+  owner_id: String
+  game_id: String
   name: String
-  genre: String
+  logo_url: String
+  created_at: String
+  updated_at: String
 }
 
-input game__GetGameRequest_Input {
-  id: String
+input team__GetTeamRequest_Input {
+  team_id: String
 }
 
-input game__CreateGameRequest_Input {
+type team__ListTeamsResponse {
+  teams: [team__Team]
+  total: Int
+}
+
+input team__GetAllTeamsRequest_Input {
+  page: Int
+  page_size: Int
+}
+
+input team__GetTeamsByOwnerRequest_Input {
+  owner_id: String
+}
+
+input team__CreateTeamRequest_Input {
+  owner_id: String
+  game_id: String
   name: String
-  genre: String
+  logo_url: String
+}
+
+input team__UpdateTeamRequest_Input {
+  team_id: String
+  name: String
+  logo_url: String
+}
+
+type team__DeleteTeamResponse {
+  success: Boolean
+  message: String
+}
+
+input team__DeleteTeamRequest_Input {
+  team_id: String
+}
+
+type tournament__MatchTeamResponse {
+  match_team: tournament__MatchTeam
+  message: String
+}
+
+type tournament__MatchTeam {
+  id_match_team: String
+  id_tournament_team: String
+  id_match: String
+  team_side: String
+  final_score: Int
+  placement: Int
+  points_earned: Float
+  results: String
+  stats: google__protobuf__Struct
+  created_at: google__protobuf__Timestamp
+}
+
+type google__protobuf__Struct {
+  fields: JSON
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type google__protobuf__Timestamp {
+  seconds: BigInt
+  nanos: Int
+}
+
+input tournament__GetMatchTeamRequest_Input {
+  id_match_team: String
+}
+
+type tournament__MatchTeamListResponse {
+  match_teams: [tournament__MatchTeam]
+  total: Int
+}
+
+input tournament__GetAllMatchTeamsRequest_Input {
+  page: Int
+  page_size: Int
+  """filtro opcional"""
+  id_match: String
+  """filtro opcional"""
+  id_tournament_team: String
+}
+
+input tournament__CreateMatchTeamRequest_Input {
+  id_tournament_team: String
+  id_match: String
+  team_side: String
+  final_score: Int
+  placement: Int
+  points_earned: Float
+  results: String
+  stats: google__protobuf__Struct_Input
+}
+
+input google__protobuf__Struct_Input {
+  fields: JSON
+}
+
+input tournament__UpdateMatchTeamRequest_Input {
+  id_match_team: String
+  team_side: String
+  final_score: Int
+  placement: Int
+  points_earned: Float
+  results: String
+  stats: google__protobuf__Struct_Input
+}
+
+type tournament__DeleteMatchTeamResponse {
+  success: Boolean
+  message: String
+}
+
+input tournament__DeleteMatchTeamRequest_Input {
+  id_match_team: String
+}
+
+type tournament__MatchResponse {
+  match: tournament__Match
+  message: String
+}
+
+type tournament__Match {
+  id_match: String
+  id_tournament: String
+  map_name: String
+  round_number: Int
+  match_number: Int
+  match_type: String
+  status: String
+  match_format: String
+  scheduled_time: String
+  start_time: String
+  end_time: String
+  winner_team_id: String
+  total_teams: Int
+  created_at: String
+}
+
+input tournament__GetMatchRequest_Input {
+  id_match: String
+}
+
+type tournament__MatchListResponse {
+  matches: [tournament__Match]
+  total: Int
+}
+
+input tournament__GetMatchesByTournamentRequest_Input {
+  id_tournament: String
+}
+
+input tournament__CreateMatchRequest_Input {
+  id_tournament: String
+  map_name: String
+  round_number: Int
+  match_number: Int
+  match_type: String
+  match_format: String
+  scheduled_time: String
+}
+
+input tournament__UpdateMatchRequest_Input {
+  id_match: String
+  status: String
+  start_time: String
+  end_time: String
+  winner_team_id: String
+}
+
+type tournament__PlayerStatResponse {
+  player_stat: tournament__PlayerStat
+  message: String
+}
+
+type tournament__PlayerStat {
+  id_player_stat: String
+  id_match: String
+  id_match_team: String
+  id_team: String
+  id_user: String
+  kills: Int
+  deaths: Int
+  assists: Int
+  score: Int
+  stats: google__protobuf__Struct
+  created_at: google__protobuf__Timestamp
+}
+
+input tournament__GetPlayerStatRequest_Input {
+  id_player_stat: String
+}
+
+type tournament__PlayerStatListResponse {
+  player_stats: [tournament__PlayerStat]
+  total: Int
+}
+
+input tournament__GetAllPlayerStatsRequest_Input {
+  page: Int
+  page_size: Int
+  """filtro opcional"""
+  id_match: String
+  """filtro opcional"""
+  id_user: String
+}
+
+input tournament__CreatePlayerStatRequest_Input {
+  id_match: String
+  id_match_team: String
+  id_team: String
+  id_user: String
+  kills: Int
+  deaths: Int
+  assists: Int
+  score: Int
+  stats: google__protobuf__Struct_Input
+}
+
+input tournament__UpdatePlayerStatRequest_Input {
+  id_player_stat: String
+  kills: Int
+  deaths: Int
+  assists: Int
+  score: Int
+  stats: google__protobuf__Struct_Input
+}
+
+type tournament__DeletePlayerStatResponse {
+  success: Boolean
+  message: String
+}
+
+input tournament__DeletePlayerStatRequest_Input {
+  id_player_stat: String
+}
+
+type tournament__TournamentTeamResponse {
+  tournament_team: tournament__TournamentTeam
+  message: String
+}
+
+type tournament__TournamentTeam {
+  id_tournament_team: String
+  id_tournament: String
+  id_team: String
+  total_points: Float
+  wins: Int
+  loses: Int
+  draws: Int
+  total_kills: Int
+  position: Int
+  status: String
+}
+
+input tournament__GetTournamentTeamRequest_Input {
+  id_tournament_team: String
+}
+
+type tournament__TournamentTeamListResponse {
+  tournament_teams: [tournament__TournamentTeam]
+  total: Int
+}
+
+input tournament__GetAllTournamentTeamRequest_Input {
+  page: Int
+  page_size: Int
+  """filtro opcional"""
+  id_tournament: String
+  """filtro opcional"""
+  id_team: String
+}
+
+input tournament__CreateTournamentTeamRequest_Input {
+  id_tournament: String
+  id_team: String
+}
+
+input tournament__UpdateTournamentTeamRequest_Input {
+  id_tournament_team: String
+  total_points: Float
+  wins: Int
+  loses: Int
+  draws: Int
+  total_kills: Int
+  position: Int
+  status: String
+}
+
+type tournament__DeleteTournamentTeamResponse {
+  success: Boolean
+  message: String
+}
+
+input tournament__DeleteTournamentTeamRequest_Input {
+  id_tournament_team: String
+}
+
+type tournament__TournamentResponse {
+  tournament: tournament__Tournament
+  message: String
+}
+
+type tournament__Tournament {
+  id_tournament: String
+  id_game: String
+  id_created_by: String
+  name: String
+  description: String
+  banner_url: String
+  status: String
+  format: String
+  started_date: String
+  end_date: String
+  registration_deadline: String
+  max_teams: Int
+  min_teams: Int
+  team_size: Int
+  rules: String
+  scoring_schema: String
+  prize_pool: String
+  created_at: String
+  updated_at: String
+}
+
+input tournament__GetTournamentRequest_Input {
+  id_tournament: String
+}
+
+type tournament__TournamentListResponse {
+  tournaments: [tournament__Tournament]
+  total: Int
+}
+
+input tournament__GetAllTournamentsRequest_Input {
+  page: Int
+  page_size: Int
+}
+
+input tournament__GetTournamentsByGameRequest_Input {
+  id_game: String
+}
+
+input tournament__CreateTournamentRequest_Input {
+  id_game: String
+  id_created_by: String
+  name: String
+  description: String
+  banner_url: String
+  format: String
+  started_date: String
+  end_date: String
+  registration_deadline: String
+  max_teams: Int
+  min_teams: Int
+  team_size: Int
+  rules: String
+  scoring_schema: String
+  prize_pool: String
+}
+
+input tournament__UpdateTournamentRequest_Input {
+  id_tournament: String
+  name: String
+  description: String
+  banner_url: String
+  status: String
+}
+
+type tournament__DeleteResponse {
+  success: Boolean
+  message: String
+}
+
+input tournament__DeleteTournamentRequest_Input {
+  id_tournament: String
 }

@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package tournament;
+
+service TournamentTeamService {
+    rpc CreateTournamentTeam(CreateTournamentTeamRequest) returns (TournamentTeamResponse);
+    rpc GetTournamentTeam(GetTournamentTeamRequest) returns (TournamentTeamResponse);
+    rpc UpdateTournamentTeam(UpdateTournamentTeamRequest) returns (TournamentTeamResponse);
+    rpc GetAllTournamentTeam(GetAllTournamentTeamRequest) returns (TournamentTeamListResponse);
+    rpc DeleteTournamentTeam(DeleteTournamentTeamRequest) returns (DeleteTournamentTeamResponse);
+}
+
+message TournamentTeam {
+    string id_tournament_team = 1;
+    string id_tournament = 2;
+    string id_team = 3;
+    float total_points = 4;
+    int32 wins = 5;
+    int32 loses = 6;
+    int32 draws = 7;
+    int32 total_kills = 8;
+    int32 position = 9;
+    string status = 10;  
+}
+
+message CreateTournamentTeamRequest {
+    string id_tournament = 1;
+    string id_team = 2;
+}
+
+message GetTournamentTeamRequest {
+    string id_tournament_team = 1;
+}
+
+message UpdateTournamentTeamRequest {
+    string id_tournament_team = 1;
+    float total_points = 2;
+    int32 wins = 3;
+    int32 loses = 4;
+    int32 draws = 5;
+    int32 total_kills = 6;
+    int32 position = 7;
+    string status = 8;  
+}
+
+message GetAllTournamentTeamRequest {
+    int32 page = 1;
+    int32 page_size = 2;
+    string id_tournament = 3; // filtro opcional
+    string id_team = 4; // filtro opcional
+}
+
+message DeleteTournamentTeamRequest {
+    string id_tournament_team = 1;
+}
+
+message TournamentTeamResponse {
+    TournamentTeam tournament_team = 1;
+    string message = 2;
+}
+
+message DeleteTournamentTeamResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message TournamentTeamListResponse {
+    repeated TournamentTeam tournament_teams = 1;
+    int32 total = 2;
+}

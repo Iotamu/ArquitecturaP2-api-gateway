@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package tournament;
+
+service MatchService {
+  rpc CreateMatch(CreateMatchRequest) returns (MatchResponse);
+  rpc GetMatch(GetMatchRequest) returns (MatchResponse);
+  rpc UpdateMatch(UpdateMatchRequest) returns (MatchResponse);
+  rpc GetMatchesByTournament(GetMatchesByTournamentRequest) returns (MatchListResponse);
+}
+
+message Match {
+  string id_match = 1;
+  string id_tournament = 2;
+  string map_name = 3;
+  int32 round_number = 4;
+  int32 match_number = 5;
+  string match_type = 6;
+  string status = 7;
+  string match_format = 8;
+  string scheduled_time = 9;
+  string start_time = 10;
+  string end_time = 11;
+  string winner_team_id = 12;
+  int32 total_teams = 13;
+  string created_at = 14;
+}
+
+message CreateMatchRequest {
+  string id_tournament = 1;
+  string map_name = 2;
+  int32 round_number = 3;
+  int32 match_number = 4;
+  string match_type = 5;
+  string match_format = 6;
+  string scheduled_time = 7;
+}
+
+message GetMatchRequest {
+  string id_match = 1;
+}
+
+message UpdateMatchRequest {
+  string id_match = 1;
+  string status = 2;
+  string start_time = 3;
+  string end_time = 4;
+  string winner_team_id = 5;
+}
+
+message GetMatchesByTournamentRequest {
+  string id_tournament = 1;
+}
+
+message MatchResponse {
+  Match match = 1;
+  string message = 2;
+}
+
+message MatchListResponse {
+  repeated Match matches = 1;
+  int32 total = 2;
+}
