@@ -8,15 +8,15 @@ import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import type { ImportFn } from '@graphql-mesh/types';
 import type { UserTypes } from './sources/User/types';
 import type { AuthTypes } from './sources/Auth/types';
-import type { InvitationTypes } from './sources/Invitation/types';
 import type { TeamMemberTypes } from './sources/TeamMember/types';
-import type { TournamentTypes } from './sources/Tournament/types';
-import type { PlayerStatsTypes } from './sources/PlayerStats/types';
-import type { TournamentTeamTypes } from './sources/TournamentTeam/types';
 import type { MatchTypes } from './sources/Match/types';
-import type { GameTypes } from './sources/Game/types';
-import type { MatchTeamTypes } from './sources/MatchTeam/types';
 import type { TeamTypes } from './sources/Team/types';
+import type { PlayerStatsTypes } from './sources/PlayerStats/types';
+import type { InvitationTypes } from './sources/Invitation/types';
+import type { TournamentTypes } from './sources/Tournament/types';
+import type { MatchTeamTypes } from './sources/MatchTeam/types';
+import type { GameTypes } from './sources/Game/types';
+import type { TournamentTeamTypes } from './sources/TournamentTeam/types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -39,21 +39,21 @@ export type Scalars = {
   /** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
   Float: { input: number; output: number; }
   user__GetAllUsersRequest_Input: { input: any; output: any; }
+  TransportOptions: { input: any; output: any; }
   /** The `BigInt` scalar type represents non-fractional signed whole numeric values. */
   BigInt: { input: bigint; output: bigint; }
-  TransportOptions: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
   game__GetAllGamesRequest_Input: { input: any; output: any; }
 };
 
 export type Query = {
-  auth_AuthService_GetGoogleAuthURL?: Maybe<auth__AuthURLResponse>;
-  auth_AuthService_GetDiscordAuthURL?: Maybe<auth__AuthURLResponse>;
-  auth_AuthService_connectivityState?: Maybe<ConnectivityState>;
   user_UserService_GetUser?: Maybe<user__UserResponse>;
   user_UserService_GetAllUsers?: Maybe<user__ListUsersResponse>;
   user_UserService_connectivityState?: Maybe<ConnectivityState>;
+  auth_AuthService_GetGoogleAuthURL?: Maybe<auth__AuthURLResponse>;
+  auth_AuthService_GetDiscordAuthURL?: Maybe<auth__AuthURLResponse>;
+  auth_AuthService_connectivityState?: Maybe<ConnectivityState>;
   team_InvitationService_GetInvitation?: Maybe<team__InvitationResponse>;
   team_InvitationService_GetTeamInvitations?: Maybe<team__ListInvitationsResponse>;
   team_InvitationService_GetUserInvitations?: Maybe<team__ListInvitationsResponse>;
@@ -88,21 +88,6 @@ export type Query = {
 };
 
 
-export type Queryauth_AuthService_GetGoogleAuthURLArgs = {
-  input?: InputMaybe<auth__GetAuthURLRequest_Input>;
-};
-
-
-export type Queryauth_AuthService_GetDiscordAuthURLArgs = {
-  input?: InputMaybe<auth__GetAuthURLRequest_Input>;
-};
-
-
-export type Queryauth_AuthService_connectivityStateArgs = {
-  tryToConnect?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
 export type Queryuser_UserService_GetUserArgs = {
   input?: InputMaybe<user__GetUserRequest_Input>;
 };
@@ -114,6 +99,21 @@ export type Queryuser_UserService_GetAllUsersArgs = {
 
 
 export type Queryuser_UserService_connectivityStateArgs = {
+  tryToConnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type Queryauth_AuthService_GetGoogleAuthURLArgs = {
+  input?: InputMaybe<auth__GetAuthURLRequest_Input>;
+};
+
+
+export type Queryauth_AuthService_GetDiscordAuthURLArgs = {
+  input?: InputMaybe<auth__GetAuthURLRequest_Input>;
+};
+
+
+export type Queryauth_AuthService_connectivityStateArgs = {
   tryToConnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -273,14 +273,13 @@ export type Querygame_GameService_connectivityStateArgs = {
 };
 
 export type Mutation = {
+  user_UserService_CreateUser?: Maybe<user__UserResponse>;
+  user_UserService_UpdateUser?: Maybe<user__UserResponse>;
+  user_UserService_DeleteUser?: Maybe<user__DeleteUserResponse>;
   auth_AuthService_GoogleCallback?: Maybe<auth__AuthResponse>;
   auth_AuthService_DiscordCallback?: Maybe<auth__AuthResponse>;
   auth_AuthService_Login?: Maybe<auth__AuthResponse>;
   auth_AuthService_ValidateToken?: Maybe<auth__ValidateTokenResponse>;
-  user_UserService_CreateUser?: Maybe<user__UserResponse>;
-  user_UserService_UpdateUser?: Maybe<user__UserResponse>;
-  user_UserService_DeleteUser?: Maybe<user__DeleteUserResponse>;
-  user_UserService_CheckEmailStatus?: Maybe<user__CheckEmailResponse>;
   team_InvitationService_CreateInvitation?: Maybe<team__InvitationResponse>;
   team_InvitationService_UpdateInvitationStatus?: Maybe<team__InvitationResponse>;
   team_TeamMemberService_AddMember?: Maybe<team__TeamMemberResponse>;
@@ -308,6 +307,21 @@ export type Mutation = {
 };
 
 
+export type Mutationuser_UserService_CreateUserArgs = {
+  input?: InputMaybe<user__CreateUserRequest_Input>;
+};
+
+
+export type Mutationuser_UserService_UpdateUserArgs = {
+  input?: InputMaybe<user__UpdateUserRequest_Input>;
+};
+
+
+export type Mutationuser_UserService_DeleteUserArgs = {
+  input?: InputMaybe<user__DeleteUserRequest_Input>;
+};
+
+
 export type Mutationauth_AuthService_GoogleCallbackArgs = {
   input?: InputMaybe<auth__OAuthCallbackRequest_Input>;
 };
@@ -325,26 +339,6 @@ export type Mutationauth_AuthService_LoginArgs = {
 
 export type Mutationauth_AuthService_ValidateTokenArgs = {
   input?: InputMaybe<auth__ValidateTokenRequest_Input>;
-};
-
-
-export type Mutationuser_UserService_CreateUserArgs = {
-  input?: InputMaybe<user__CreateUserRequest_Input>;
-};
-
-
-export type Mutationuser_UserService_UpdateUserArgs = {
-  input?: InputMaybe<user__UpdateUserRequest_Input>;
-};
-
-
-export type Mutationuser_UserService_DeleteUserArgs = {
-  input?: InputMaybe<user__DeleteUserRequest_Input>;
-};
-
-
-export type Mutationuser_UserService_CheckEmailStatusArgs = {
-  input?: InputMaybe<user__CheckEmailRequest_Input>;
 };
 
 
@@ -467,22 +461,6 @@ export type Mutationgame_GameService_CreateGameModeArgs = {
   input?: InputMaybe<game__CreateGameModeRequest_Input>;
 };
 
-export type auth__AuthURLResponse = {
-  url?: Maybe<Scalars['String']['output']>;
-  state?: Maybe<Scalars['String']['output']>;
-};
-
-export type auth__GetAuthURLRequest_Input = {
-  state?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ConnectivityState =
-  | 'IDLE'
-  | 'CONNECTING'
-  | 'READY'
-  | 'TRANSIENT_FAILURE'
-  | 'SHUTDOWN';
-
 export type user__UserResponse = {
   user?: Maybe<user__User>;
   message?: Maybe<Scalars['String']['output']>;
@@ -509,43 +487,12 @@ export type user__ListUsersResponse = {
   total?: Maybe<Scalars['Int']['output']>;
 };
 
-export type auth__AuthResponse = {
-  access_token?: Maybe<Scalars['String']['output']>;
-  refresh_token?: Maybe<Scalars['String']['output']>;
-  expires_in?: Maybe<Scalars['BigInt']['output']>;
-  user?: Maybe<auth__AuthUser>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type auth__AuthUser = {
-  id?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-  avatar_url?: Maybe<Scalars['String']['output']>;
-  verified?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type auth__OAuthCallbackRequest_Input = {
-  code?: InputMaybe<Scalars['String']['input']>;
-  state?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type auth__LoginRequest_Input = {
-  email?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type auth__ValidateTokenResponse = {
-  valid?: Maybe<Scalars['Boolean']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
-};
-
-export type auth__ValidateTokenRequest_Input = {
-  token?: InputMaybe<Scalars['String']['input']>;
-};
+export type ConnectivityState =
+  | 'IDLE'
+  | 'CONNECTING'
+  | 'READY'
+  | 'TRANSIENT_FAILURE'
+  | 'SHUTDOWN';
 
 export type user__CreateUserRequest_Input = {
   username?: InputMaybe<Scalars['String']['input']>;
@@ -571,16 +518,52 @@ export type user__DeleteUserRequest_Input = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type user__CheckEmailResponse = {
-  available?: Maybe<Scalars['Boolean']['output']>;
-  has_password?: Maybe<Scalars['Boolean']['output']>;
-  auth_provider?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
-  can_complete?: Maybe<Scalars['Boolean']['output']>;
+export type auth__AuthURLResponse = {
+  url?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<Scalars['String']['output']>;
 };
 
-export type user__CheckEmailRequest_Input = {
+export type auth__GetAuthURLRequest_Input = {
+  state?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type auth__AuthResponse = {
+  access_token?: Maybe<Scalars['String']['output']>;
+  refresh_token?: Maybe<Scalars['String']['output']>;
+  expires_in?: Maybe<Scalars['BigInt']['output']>;
+  user?: Maybe<auth__AuthUser>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type auth__AuthUser = {
+  id?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  avatar_url?: Maybe<Scalars['String']['output']>;
+  /** ← Asegúrate de que esté aquí */
+  verified?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type auth__OAuthCallbackRequest_Input = {
+  code?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type auth__LoginRequest_Input = {
   email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type auth__ValidateTokenResponse = {
+  valid?: Maybe<Scalars['Boolean']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+export type auth__ValidateTokenRequest_Input = {
+  token?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type team__InvitationResponse = {
@@ -1068,14 +1051,14 @@ export type tournament__DeleteTournamentRequest_Input = {
 };
 
 export type game__GameResponse = {
-  idGame?: Maybe<Scalars['String']['output']>;
+  id_game?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  gameType?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['String']['output']>;
+  game_type?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['String']['output']>;
 };
 
 export type game__GetGameRequest_Input = {
-  idGame?: InputMaybe<Scalars['String']['input']>;
+  id_game?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type game__GameListResponse = {
@@ -1083,28 +1066,29 @@ export type game__GameListResponse = {
 };
 
 export type game__GameModeListResponse = {
-  gameModes?: Maybe<Array<Maybe<game__GameModeResponse>>>;
+  game_modes?: Maybe<Array<Maybe<game__GameModeResponse>>>;
 };
 
 export type game__GameModeResponse = {
-  idGameMode?: Maybe<Scalars['String']['output']>;
-  idGame?: Maybe<Scalars['String']['output']>;
+  id_game_mode?: Maybe<Scalars['String']['output']>;
+  id_game?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   rule?: Maybe<Scalars['String']['output']>;
 };
 
 export type game__GetGameModesRequest_Input = {
-  idGame?: InputMaybe<Scalars['String']['input']>;
+  id_game?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type game__CreateGameRequest_Input = {
   name?: InputMaybe<Scalars['String']['input']>;
-  gameType?: InputMaybe<Scalars['String']['input']>;
+  game_type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type game__CreateGameModeRequest_Input = {
-  idGame?: InputMaybe<Scalars['String']['input']>;
+  id_game?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  /** JSON como string Atencion */
   rule?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1198,14 +1182,22 @@ export type DirectiveResolverFn<TResult = Record<PropertyKey, never>, TParent = 
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
-  auth__AuthURLResponse: ResolverTypeWrapper<auth__AuthURLResponse>;
-  auth__GetAuthURLRequest_Input: auth__GetAuthURLRequest_Input;
-  ConnectivityState: ConnectivityState;
   user__UserResponse: ResolverTypeWrapper<user__UserResponse>;
   user__User: ResolverTypeWrapper<user__User>;
   user__GetUserRequest_Input: user__GetUserRequest_Input;
   user__ListUsersResponse: ResolverTypeWrapper<user__ListUsersResponse>;
   user__GetAllUsersRequest_Input: ResolverTypeWrapper<Scalars['user__GetAllUsersRequest_Input']['output']>;
+  ConnectivityState: ConnectivityState;
+  user__CreateUserRequest_Input: user__CreateUserRequest_Input;
+  user__UpdateUserRequest_Input: user__UpdateUserRequest_Input;
+  user__DeleteUserResponse: ResolverTypeWrapper<user__DeleteUserResponse>;
+  user__DeleteUserRequest_Input: user__DeleteUserRequest_Input;
+  TransportOptions: ResolverTypeWrapper<Scalars['TransportOptions']['output']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  auth__AuthURLResponse: ResolverTypeWrapper<auth__AuthURLResponse>;
+  auth__GetAuthURLRequest_Input: auth__GetAuthURLRequest_Input;
   auth__AuthResponse: ResolverTypeWrapper<auth__AuthResponse>;
   BigInt: ResolverTypeWrapper<Scalars['BigInt']['output']>;
   auth__AuthUser: ResolverTypeWrapper<auth__AuthUser>;
@@ -1213,16 +1205,6 @@ export type ResolversTypes = ResolversObject<{
   auth__LoginRequest_Input: auth__LoginRequest_Input;
   auth__ValidateTokenResponse: ResolverTypeWrapper<auth__ValidateTokenResponse>;
   auth__ValidateTokenRequest_Input: auth__ValidateTokenRequest_Input;
-  user__CreateUserRequest_Input: user__CreateUserRequest_Input;
-  user__UpdateUserRequest_Input: user__UpdateUserRequest_Input;
-  user__DeleteUserResponse: ResolverTypeWrapper<user__DeleteUserResponse>;
-  user__DeleteUserRequest_Input: user__DeleteUserRequest_Input;
-  user__CheckEmailResponse: ResolverTypeWrapper<user__CheckEmailResponse>;
-  user__CheckEmailRequest_Input: user__CheckEmailRequest_Input;
-  TransportOptions: ResolverTypeWrapper<Scalars['TransportOptions']['output']>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   team__InvitationResponse: ResolverTypeWrapper<team__InvitationResponse>;
   team__Invitation: ResolverTypeWrapper<team__Invitation>;
   team__GetInvitationRequest_Input: team__GetInvitationRequest_Input;
@@ -1314,13 +1296,21 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Query: Record<PropertyKey, never>;
   Mutation: Record<PropertyKey, never>;
-  auth__AuthURLResponse: auth__AuthURLResponse;
-  auth__GetAuthURLRequest_Input: auth__GetAuthURLRequest_Input;
   user__UserResponse: user__UserResponse;
   user__User: user__User;
   user__GetUserRequest_Input: user__GetUserRequest_Input;
   user__ListUsersResponse: user__ListUsersResponse;
   user__GetAllUsersRequest_Input: Scalars['user__GetAllUsersRequest_Input']['output'];
+  user__CreateUserRequest_Input: user__CreateUserRequest_Input;
+  user__UpdateUserRequest_Input: user__UpdateUserRequest_Input;
+  user__DeleteUserResponse: user__DeleteUserResponse;
+  user__DeleteUserRequest_Input: user__DeleteUserRequest_Input;
+  TransportOptions: Scalars['TransportOptions']['output'];
+  String: Scalars['String']['output'];
+  Boolean: Scalars['Boolean']['output'];
+  Int: Scalars['Int']['output'];
+  auth__AuthURLResponse: auth__AuthURLResponse;
+  auth__GetAuthURLRequest_Input: auth__GetAuthURLRequest_Input;
   auth__AuthResponse: auth__AuthResponse;
   BigInt: Scalars['BigInt']['output'];
   auth__AuthUser: auth__AuthUser;
@@ -1328,16 +1318,6 @@ export type ResolversParentTypes = ResolversObject<{
   auth__LoginRequest_Input: auth__LoginRequest_Input;
   auth__ValidateTokenResponse: auth__ValidateTokenResponse;
   auth__ValidateTokenRequest_Input: auth__ValidateTokenRequest_Input;
-  user__CreateUserRequest_Input: user__CreateUserRequest_Input;
-  user__UpdateUserRequest_Input: user__UpdateUserRequest_Input;
-  user__DeleteUserResponse: user__DeleteUserResponse;
-  user__DeleteUserRequest_Input: user__DeleteUserRequest_Input;
-  user__CheckEmailResponse: user__CheckEmailResponse;
-  user__CheckEmailRequest_Input: user__CheckEmailRequest_Input;
-  TransportOptions: Scalars['TransportOptions']['output'];
-  String: Scalars['String']['output'];
-  Boolean: Scalars['Boolean']['output'];
-  Int: Scalars['Int']['output'];
   team__InvitationResponse: team__InvitationResponse;
   team__Invitation: team__Invitation;
   team__GetInvitationRequest_Input: team__GetInvitationRequest_Input;
@@ -1468,12 +1448,12 @@ export type enumDirectiveArgs = {
 export type enumDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = enumDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  auth_AuthService_GetGoogleAuthURL?: Resolver<Maybe<ResolversTypes['auth__AuthURLResponse']>, ParentType, ContextType, Partial<Queryauth_AuthService_GetGoogleAuthURLArgs>>;
-  auth_AuthService_GetDiscordAuthURL?: Resolver<Maybe<ResolversTypes['auth__AuthURLResponse']>, ParentType, ContextType, Partial<Queryauth_AuthService_GetDiscordAuthURLArgs>>;
-  auth_AuthService_connectivityState?: Resolver<Maybe<ResolversTypes['ConnectivityState']>, ParentType, ContextType, Partial<Queryauth_AuthService_connectivityStateArgs>>;
   user_UserService_GetUser?: Resolver<Maybe<ResolversTypes['user__UserResponse']>, ParentType, ContextType, Partial<Queryuser_UserService_GetUserArgs>>;
   user_UserService_GetAllUsers?: Resolver<Maybe<ResolversTypes['user__ListUsersResponse']>, ParentType, ContextType, Partial<Queryuser_UserService_GetAllUsersArgs>>;
   user_UserService_connectivityState?: Resolver<Maybe<ResolversTypes['ConnectivityState']>, ParentType, ContextType, Partial<Queryuser_UserService_connectivityStateArgs>>;
+  auth_AuthService_GetGoogleAuthURL?: Resolver<Maybe<ResolversTypes['auth__AuthURLResponse']>, ParentType, ContextType, Partial<Queryauth_AuthService_GetGoogleAuthURLArgs>>;
+  auth_AuthService_GetDiscordAuthURL?: Resolver<Maybe<ResolversTypes['auth__AuthURLResponse']>, ParentType, ContextType, Partial<Queryauth_AuthService_GetDiscordAuthURLArgs>>;
+  auth_AuthService_connectivityState?: Resolver<Maybe<ResolversTypes['ConnectivityState']>, ParentType, ContextType, Partial<Queryauth_AuthService_connectivityStateArgs>>;
   team_InvitationService_GetInvitation?: Resolver<Maybe<ResolversTypes['team__InvitationResponse']>, ParentType, ContextType, Partial<Queryteam_InvitationService_GetInvitationArgs>>;
   team_InvitationService_GetTeamInvitations?: Resolver<Maybe<ResolversTypes['team__ListInvitationsResponse']>, ParentType, ContextType, Partial<Queryteam_InvitationService_GetTeamInvitationsArgs>>;
   team_InvitationService_GetUserInvitations?: Resolver<Maybe<ResolversTypes['team__ListInvitationsResponse']>, ParentType, ContextType, Partial<Queryteam_InvitationService_GetUserInvitationsArgs>>;
@@ -1508,14 +1488,13 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
 }>;
 
 export type MutationResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  user_UserService_CreateUser?: Resolver<Maybe<ResolversTypes['user__UserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_CreateUserArgs>>;
+  user_UserService_UpdateUser?: Resolver<Maybe<ResolversTypes['user__UserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_UpdateUserArgs>>;
+  user_UserService_DeleteUser?: Resolver<Maybe<ResolversTypes['user__DeleteUserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_DeleteUserArgs>>;
   auth_AuthService_GoogleCallback?: Resolver<Maybe<ResolversTypes['auth__AuthResponse']>, ParentType, ContextType, Partial<Mutationauth_AuthService_GoogleCallbackArgs>>;
   auth_AuthService_DiscordCallback?: Resolver<Maybe<ResolversTypes['auth__AuthResponse']>, ParentType, ContextType, Partial<Mutationauth_AuthService_DiscordCallbackArgs>>;
   auth_AuthService_Login?: Resolver<Maybe<ResolversTypes['auth__AuthResponse']>, ParentType, ContextType, Partial<Mutationauth_AuthService_LoginArgs>>;
   auth_AuthService_ValidateToken?: Resolver<Maybe<ResolversTypes['auth__ValidateTokenResponse']>, ParentType, ContextType, Partial<Mutationauth_AuthService_ValidateTokenArgs>>;
-  user_UserService_CreateUser?: Resolver<Maybe<ResolversTypes['user__UserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_CreateUserArgs>>;
-  user_UserService_UpdateUser?: Resolver<Maybe<ResolversTypes['user__UserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_UpdateUserArgs>>;
-  user_UserService_DeleteUser?: Resolver<Maybe<ResolversTypes['user__DeleteUserResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_DeleteUserArgs>>;
-  user_UserService_CheckEmailStatus?: Resolver<Maybe<ResolversTypes['user__CheckEmailResponse']>, ParentType, ContextType, Partial<Mutationuser_UserService_CheckEmailStatusArgs>>;
   team_InvitationService_CreateInvitation?: Resolver<Maybe<ResolversTypes['team__InvitationResponse']>, ParentType, ContextType, Partial<Mutationteam_InvitationService_CreateInvitationArgs>>;
   team_InvitationService_UpdateInvitationStatus?: Resolver<Maybe<ResolversTypes['team__InvitationResponse']>, ParentType, ContextType, Partial<Mutationteam_InvitationService_UpdateInvitationStatusArgs>>;
   team_TeamMemberService_AddMember?: Resolver<Maybe<ResolversTypes['team__TeamMemberResponse']>, ParentType, ContextType, Partial<Mutationteam_TeamMemberService_AddMemberArgs>>;
@@ -1540,11 +1519,6 @@ export type MutationResolvers<ContextType = MeshContext, ParentType extends Reso
   tournament_TournamentService_DeleteTournament?: Resolver<Maybe<ResolversTypes['tournament__DeleteResponse']>, ParentType, ContextType, Partial<Mutationtournament_TournamentService_DeleteTournamentArgs>>;
   game_GameService_CreateGame?: Resolver<Maybe<ResolversTypes['game__GameResponse']>, ParentType, ContextType, Partial<Mutationgame_GameService_CreateGameArgs>>;
   game_GameService_CreateGameMode?: Resolver<Maybe<ResolversTypes['game__GameModeResponse']>, ParentType, ContextType, Partial<Mutationgame_GameService_CreateGameModeArgs>>;
-}>;
-
-export type auth__AuthURLResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['auth__AuthURLResponse'] = ResolversParentTypes['auth__AuthURLResponse']> = ResolversObject<{
-  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
 export type user__UserResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['user__UserResponse'] = ResolversParentTypes['user__UserResponse']> = ResolversObject<{
@@ -1573,6 +1547,20 @@ export interface user__GetAllUsersRequest_InputScalarConfig extends GraphQLScala
   name: 'user__GetAllUsersRequest_Input';
 }
 
+export type user__DeleteUserResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['user__DeleteUserResponse'] = ResolversParentTypes['user__DeleteUserResponse']> = ResolversObject<{
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+}>;
+
+export interface TransportOptionsScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['TransportOptions'], any> {
+  name: 'TransportOptions';
+}
+
+export type auth__AuthURLResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['auth__AuthURLResponse'] = ResolversParentTypes['auth__AuthURLResponse']> = ResolversObject<{
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+}>;
+
 export type auth__AuthResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['auth__AuthResponse'] = ResolversParentTypes['auth__AuthResponse']> = ResolversObject<{
   access_token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   refresh_token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1600,23 +1588,6 @@ export type auth__ValidateTokenResponseResolvers<ContextType = MeshContext, Pare
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
-
-export type user__DeleteUserResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['user__DeleteUserResponse'] = ResolversParentTypes['user__DeleteUserResponse']> = ResolversObject<{
-  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-}>;
-
-export type user__CheckEmailResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['user__CheckEmailResponse'] = ResolversParentTypes['user__CheckEmailResponse']> = ResolversObject<{
-  available?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  has_password?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  auth_provider?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  can_complete?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-}>;
-
-export interface TransportOptionsScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['TransportOptions'], any> {
-  name: 'TransportOptions';
-}
 
 export type team__InvitationResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['team__InvitationResponse'] = ResolversParentTypes['team__InvitationResponse']> = ResolversObject<{
   invitation?: Resolver<Maybe<ResolversTypes['team__Invitation']>, ParentType, ContextType>;
@@ -1848,10 +1819,10 @@ export type tournament__DeleteResponseResolvers<ContextType = MeshContext, Paren
 }>;
 
 export type game__GameResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameResponse'] = ResolversParentTypes['game__GameResponse']> = ResolversObject<{
-  idGame?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_game?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  gameType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  game_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
 export type game__GameListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameListResponse'] = ResolversParentTypes['game__GameListResponse']> = ResolversObject<{
@@ -1863,12 +1834,12 @@ export interface game__GetAllGamesRequest_InputScalarConfig extends GraphQLScala
 }
 
 export type game__GameModeListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameModeListResponse'] = ResolversParentTypes['game__GameModeListResponse']> = ResolversObject<{
-  gameModes?: Resolver<Maybe<Array<Maybe<ResolversTypes['game__GameModeResponse']>>>, ParentType, ContextType>;
+  game_modes?: Resolver<Maybe<Array<Maybe<ResolversTypes['game__GameModeResponse']>>>, ParentType, ContextType>;
 }>;
 
 export type game__GameModeResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['game__GameModeResponse'] = ResolversParentTypes['game__GameModeResponse']> = ResolversObject<{
-  idGameMode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  idGame?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_game_mode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id_game?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   rule?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
@@ -1876,18 +1847,17 @@ export type game__GameModeResponseResolvers<ContextType = MeshContext, ParentTyp
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  auth__AuthURLResponse?: auth__AuthURLResponseResolvers<ContextType>;
   user__UserResponse?: user__UserResponseResolvers<ContextType>;
   user__User?: user__UserResolvers<ContextType>;
   user__ListUsersResponse?: user__ListUsersResponseResolvers<ContextType>;
   user__GetAllUsersRequest_Input?: GraphQLScalarType;
+  user__DeleteUserResponse?: user__DeleteUserResponseResolvers<ContextType>;
+  TransportOptions?: GraphQLScalarType;
+  auth__AuthURLResponse?: auth__AuthURLResponseResolvers<ContextType>;
   auth__AuthResponse?: auth__AuthResponseResolvers<ContextType>;
   BigInt?: GraphQLScalarType;
   auth__AuthUser?: auth__AuthUserResolvers<ContextType>;
   auth__ValidateTokenResponse?: auth__ValidateTokenResponseResolvers<ContextType>;
-  user__DeleteUserResponse?: user__DeleteUserResponseResolvers<ContextType>;
-  user__CheckEmailResponse?: user__CheckEmailResponseResolvers<ContextType>;
-  TransportOptions?: GraphQLScalarType;
   team__InvitationResponse?: team__InvitationResponseResolvers<ContextType>;
   team__Invitation?: team__InvitationResolvers<ContextType>;
   team__ListInvitationsResponse?: team__ListInvitationsResponseResolvers<ContextType>;

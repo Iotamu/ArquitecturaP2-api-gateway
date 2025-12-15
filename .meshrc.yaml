@@ -3,16 +3,16 @@ sources:
   - name: User
     handler:
       grpc:
-        endpoint: "localhost:50051"
-        protoFile: "./proto/user.proto"
+        endpoint: localhost:50051
+        source: "proto/user.proto"
         packageName: "user"
         serviceName: "UserService"
         useHTTPS: false
   - name: Auth
     handler:
       grpc:
-        endpoint: "localhost:50051"
-        protoFile: "./proto/auth.proto"
+        endpoint: localhost:50051
+        source: "proto/auth.proto"
         packageName: "auth"
         serviceName: "AuthService"
         useHTTPS: false
@@ -123,8 +123,8 @@ sources:
   - name: Game
     handler:
       grpc:
-        endpoint: "localhost:50054"
-        protoFilePath: "./proto/game.proto"
+        endpoint: localhost:50054
+        source: "proto/game.proto"
         packageName: "game"
         serviceName: "GameService"
         useHTTPS: false
